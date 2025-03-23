@@ -1,47 +1,52 @@
-from joblib import load
-import numpy as np
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+import joblib
 import pandas as pd
+from typing import Literal
+import os
 
-# Load the model and scaler
-model = load('best_model.joblib')
-scaler = load('scaler.joblib')
+# Initialize FastAPI app
+app = FastAPI(title="Energy Efficiency Prediction API", description="Predicts building heating load")
 
-def predict_next_close(last_5_days):
-    """
-    Predict the next day's closing price given the last 5 days' OHLC and Volume data.
-    Input: DataFrame with columns ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
-    """
-    # Ensure input has exactly 5 days
-    if len(last_5_days) != 5:
-        raise ValueError("Input must contain exactly 5 days of data")
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all for testing; restrict in production
+    allow_credentials=True,
+    allow_methods=["POST"],
+    allow_headers=["*"],
+)
 
-    # Extract features in the correct order (lag5 to lag1)
-    features = []
-    for i in range(4, -1, -1):  # From oldest (t-4) to newest (t)
-        day = last_5_days.iloc[i]
-        features.extend([day['Open'], day['High'], day['Low'], day['Close'], day['Volume']])
+# Define input data model with Pydantic
+class BuildingInput(BaseModel):
+    X1: float = Field(..., ge=0.62, le=0.98, description="Relative Compactness")
+    X2: float = Field(..., ge=514.5, le=808.5, description="Surface Area (m²)")
+    X3: float = Field(..., ge=245.0, le=416.5, description="Wall Area (m²)")
+    X4: float = Field(..., ge=110.25, le=220.5, description="Roof Area (m²)")
+    X5: float = Field(..., ge=3.5, le=7.0, description="Overall Height (m)")
+    X6: Literal[2, 3, 4, 5] = Field(..., description="Orientation (2=North, 3=East, 4=South, 5=West)")
+    X7: float = Field(..., ge=0.0, le=0.4, description="Glazing Area")
+    X8: Literal[0, 1, 2, 3, 4, 5] = Field(..., description="Glazing Area Distribution (0=None, 1-5=Patterns)")
 
-    # Convert to numpy array and reshape for prediction
-    features = np.array(features).reshape(1, -1)
+# Load the pre-trained model (relative to API folder)
+model_path = os.path.join(os.path.dirname(__file__), "best_model.pkl")
+model = joblib.load(model_path)
 
-    # Scale the features
-    features_scaled = scaler.transform(features)
-
+# Define the prediction endpoint
+@app.post("/predict")
+def predict(data: BuildingInput):
+    # Convert Pydantic model to DataFrame
+    input_dict = data.dict()
+    input_df = pd.DataFrame([input_dict])
+    # Ensure column order matches training data
+    input_df = input_df[["X1", "X2", "X3", "X4", "X5", "X6", "X7", "X8"]]
     # Make prediction
-    prediction = model.predict(features_scaled)
-    return prediction[0]
+    prediction = model.predict(input_df)[0]
+    # Return as JSON
+    return {"heating_load": float(prediction)}
 
-# Example usage
+# Run locally for testing
 if __name__ == "__main__":
-    # Sample input: last 5 days from the dataset (e.g., 2025-03-17 to 2025-03-21)
-    sample_data = pd.DataFrame({
-        'Date': pd.to_datetime(['2025-03-17', '2025-03-18', '2025-03-19', '2025-03-20', '2025-03-21']),
-        'Open': [1.08794, 1.0918, 1.09386, 1.09116, 1.08535],
-        'High': [1.09297, 1.09545, 1.09449, 1.09171, 1.08611],
-        'Low': [1.08685, 1.08924, 1.08603, 1.08145, 1.0797],
-        'Close': [1.0918, 1.09385, 1.09115, 1.08532, 1.08121],
-        'Volume': [135357, 169593, 172839, 162746, 155295]
-    })
-    pred = predict_next_close(sample_data)
-    print(f"Predicted next closing price for 2025-03-22: {pred:.5f}")
-    
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
