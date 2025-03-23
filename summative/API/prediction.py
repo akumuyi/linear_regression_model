@@ -36,8 +36,8 @@ model = joblib.load(model_path)
 # Define the prediction endpoint
 @app.post("/predict")
 def predict(data: BuildingInput):
-    # Convert Pydantic model to DataFrame
-    input_dict = data.dict()
+    # Convert Pydantic model to dictionary using model_dump()
+    input_dict = data.model_dump()
     input_df = pd.DataFrame([input_dict])
     # Ensure column order matches training data
     input_df = input_df[["X1", "X2", "X3", "X4", "X5", "X6", "X7", "X8"]]
