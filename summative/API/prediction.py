@@ -12,7 +12,7 @@ app = FastAPI(title="Energy Efficiency Prediction API", description="Predicts bu
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all for testing; restrict in production
+    allow_origins=["*"],  # Allow all for testing
     allow_credentials=True,
     allow_methods=["POST"],
     allow_headers=["*"],
@@ -29,7 +29,7 @@ class BuildingInput(BaseModel):
     X7: float = Field(..., ge=0.0, le=0.4, description="Glazing Area")
     X8: Literal[0, 1, 2, 3, 4, 5] = Field(..., description="Glazing Area Distribution (0=None, 1-5=Patterns)")
 
-# Load the pre-trained model (relative to API folder)
+# Load the pre-trained model
 model_path = os.path.join(os.path.dirname(__file__), "best_model.pkl")
 model = joblib.load(model_path)
 
