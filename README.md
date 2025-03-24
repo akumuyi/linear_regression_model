@@ -201,6 +201,9 @@ flutter pub get
 flutter run
 ```
 
+### Demo Video
+- Youtube: [Energy Prediction App Demo](https://youtu.be/CHyFs9APYF0)
+
 
 ## Contributing
 

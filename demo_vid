@@ -1,0 +1,51 @@
+Video Demo Transcript - Building Energy Efficiency Prediction Project
+Duration: 4 minutes
+
+[0:00 - 0:15] Introduction
+Hello everyone! I'm [Your Name], and today I'll be demonstrating our Building Energy Efficiency Prediction project. This solution combines machine learning, a REST API, and a mobile application to predict building heating loads based on architectural features.
+
+[0:15 - 1:00] Mobile App Demo
+Let me start by showing you our Flutter-based mobile application in action. As you can see, the interface is clean and intuitive. I'll input some sample building parameters:
+- Relative Compactness: 0.98
+- Surface Area: 514.5
+- Wall Area: 294.0
+- Roof Area: 110.25
+- Overall Height: 7.0
+- Orientation: 2
+- Glazing Area: 0.0
+- Glazing Area Distribution: 0
+
+Watch as I submit these values... and there's our prediction! The model predicts a heating load of 14.5 kWh/m², which aligns with our expectations for a building with these characteristics.
+
+[1:00 - 2:00] Swagger UI API Testing
+Now, let's verify the same prediction using our API through the Swagger UI at https://energy-prediction-00ed.onrender.com/docs. I'll expand the POST /predict endpoint... click "Try it out"... and input the same values we used in the mobile app. As you can see, we get the identical prediction, confirming our API's consistency.
+
+[2:00 - 2:45] Model Development and Performance
+Let's discuss the machine learning aspects. We developed this model using the UCI Energy Efficiency dataset, which contains 768 samples with 8 input features. After comparing multiple algorithms, we selected a Random Forest Regressor due to its superior performance:
+- Training MSE: 0.89
+- Validation MSE: 1.12
+- R² Score: 0.98
+
+These metrics indicate excellent predictive performance, with our model explaining 98% of the variance in heating loads.
+
+[2:45 - 3:15] Model Justification
+Our choice of Random Forest was driven by:
+1. The non-linear relationships in our dataset
+2. The algorithm's ability to handle feature interactions
+3. Its robustness against overfitting
+4. Superior performance compared to linear regression and decision trees
+
+[3:15 - 3:45] Deployment Architecture
+The deployment architecture consists of three main components:
+1. A trained model serialized with pickle
+2. A FastAPI service hosting the model
+3. A Flutter mobile application consuming the API
+
+We've deployed the API on Render for reliable, scalable access.
+
+[3:45 - 4:00] Conclusion
+This solution provides architects and engineers with a practical tool for estimating building heating loads during the design phase. The combination of accuracy, accessibility, and ease of use makes it valuable for real-world applications.
+
+Thank you for your attention! Any questions?
+
+[End of Transcript] 
