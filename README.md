@@ -1,9 +1,16 @@
 # Building Energy Efficiency Prediction
 
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Flutter](https://img.shields.io/badge/flutter-3.0+-blue.svg)](https://flutter.dev/)
+[![FastAPI](https://img.shields.io/badge/fastapi-0.68+-green.svg)](https://fastapi.tiangolo.com/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 A complete solution for predicting building heating loads based on architectural features. This project includes a machine learning model, a REST API for serving predictions, and a mobile application for end users.
 
 ## Table of Contents
 - [Overview](#overview)
+- [Technologies Used](#technologies-used)
+- [Features](#features)
 - [Dataset](#dataset)
 - [Project Structure](#project-structure)
 - [Data Exploration](#data-exploration)
@@ -12,10 +19,47 @@ A complete solution for predicting building heating loads based on architectural
 - [Mobile Application](#mobile-application)
 - [Video Presentation](#video-presentation)
 - [Development Setup](#development-setup)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Overview
 
 This project predicts the heating load requirements for buildings based on specific characteristics such as surface area, wall area, roof area, and other architectural features. By leveraging machine learning, it provides a practical tool for energy efficiency analysis in building design.
+
+## Technologies Used
+
+- **Python 3.8+**
+  - scikit-learn
+  - pandas
+  - numpy
+  - FastAPI
+  - Pydantic
+- **Flutter 3.0+**
+  - Material Design
+  - HTTP package
+  - Provider for state management
+- **Machine Learning**
+  - scikit-learn
+  - Random Forest
+  - Decision Trees
+  - Linear Regression
+
+## Features
+
+- **Machine Learning Models**
+  - Multiple model comparison
+  - Automated model selection
+  - Model persistence
+- **API Service**
+  - RESTful endpoints
+  - Input validation
+  - CORS support
+  - Swagger documentation
+- **Mobile Application**
+  - Clean, intuitive UI
+  - Real-time predictions
+  - Error handling
+  - Input validation
 
 ## Dataset
 
@@ -151,3 +195,23 @@ flutter pub get
 - Start the API server
 - Launch the Flutter app
 - Test the complete system
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [UCI Machine Learning Repository](https://archive.ics.uci.edu/) for providing the Energy Efficiency dataset
+- [FastAPI](https://fastapi.tiangolo.com/) for the excellent web framework
+- [Flutter](https://flutter.dev/) for the cross-platform UI framework
