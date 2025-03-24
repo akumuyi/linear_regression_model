@@ -9,9 +9,9 @@ A complete solution for predicting building heating loads based on architectural
 
 ## Table of Contents
 - [Overview](#overview)
+- [Dataset](#dataset)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
-- [Dataset](#dataset)
 - [Project Structure](#project-structure)
 - [Data Exploration](#data-exploration)
 - [Model Training](#model-training)
@@ -25,6 +25,26 @@ A complete solution for predicting building heating loads based on architectural
 ## Overview
 
 This project predicts the heating load requirements for buildings based on specific characteristics such as surface area, wall area, roof area, and other architectural features. By leveraging machine learning, it provides a practical tool for energy efficiency analysis in building design.
+
+
+## Dataset
+
+The project uses the Energy Efficiency dataset from the UCI Machine Learning Repository:
+- **Source**: [UCI Machine Learning Repository Energy Efficiency Dataset](https://archive.ics.uci.edu/dataset/242/energy+efficiency)
+- **Size**: 768 samples
+- **Features**: 8 variables
+  - Relative compactness
+  - Surface area
+  - Wall area
+  - Roof area
+  - Overall height
+  - Orientation
+  - Glazing area
+  - Glazing area distribution
+- **Target**: Heating load (Y1) and cooling load (Y2)
+- **Citation**: Tsanas, A. & Xifara, A. (2012). Energy Efficiency [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C51307
+
+
 
 ## Technologies Used
 
@@ -61,22 +81,6 @@ This project predicts the heating load requirements for buildings based on speci
   - Error handling
   - Input validation
 
-## Dataset
-
-The project uses the Energy Efficiency dataset from the UCI Machine Learning Repository:
-- **Source**: [UCI Machine Learning Repository Energy Efficiency Dataset](https://archive.ics.uci.edu/dataset/242/energy+efficiency)
-- **Size**: 768 samples
-- **Features**: 8 variables
-  - Relative compactness
-  - Surface area
-  - Wall area
-  - Roof area
-  - Overall height
-  - Orientation
-  - Glazing area
-  - Glazing area distribution
-- **Target**: Heating load (Y1) and cooling load (Y2)
-- **Citation**: Tsanas, A. & Xifara, A. (2012). Energy Efficiency [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C51307
 
 ## Project Structure
 
