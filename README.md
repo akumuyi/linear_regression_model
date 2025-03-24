@@ -16,7 +16,6 @@ A complete solution for predicting building heating loads based on architectural
 - [Data Exploration](#data-exploration)
 - [Model Training](#model-training)
 - [API Service](#api-service)
-- [Video Presentation](#video-presentation)
 - [Development Setup](#development-setup)
 - [Mobile Application](#mobile-application)
 - [Contributing](#contributing)
