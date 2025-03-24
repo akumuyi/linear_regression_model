@@ -28,25 +28,57 @@ class _PredictionPageState extends State<PredictionPage> {
 
   // Function to make the API call
   Future<void> _makePrediction() async {
-    // Collect inputs into a map
-    final inputs = {
-      'X1': _x1Controller.text,
-      'X2': _x2Controller.text,
-      'X3': _x3Controller.text,
-      'X4': _x4Controller.text,
-      'X5': _x5Controller.text,
-      'X6': _x6Controller.text,
-      'X7': _x7Controller.text,
-      'X8': _x8Controller.text,
-    };
+    // Parse inputs to appropriate types
+    final x1 = double.tryParse(_x1Controller.text);
+    final x2 = double.tryParse(_x2Controller.text);
+    final x3 = double.tryParse(_x3Controller.text);
+    final x4 = double.tryParse(_x4Controller.text);
+    final x5 = double.tryParse(_x5Controller.text);
+    final x6 = int.tryParse(_x6Controller.text);
+    final x7 = double.tryParse(_x7Controller.text);
+    final x8 = int.tryParse(_x8Controller.text);
 
-    // Basic validation: Check for empty fields
-    if (inputs.values.any((value) => value.isEmpty)) {
+    // Check for invalid inputs and collect errors
+    List<String> errors = [];
+    if (x1 == null) errors.add('X1');
+    if (x2 == null) errors.add('X2');
+    if (x3 == null) errors.add('X3');
+    if (x4 == null) errors.add('X4');
+    if (x5 == null) errors.add('X5');
+    if (x6 == null) errors.add('X6');
+    if (x7 == null) errors.add('X7');
+    if (x8 == null) errors.add('X8');
+
+    // Check for empty fields as well
+    if (_x1Controller.text.isEmpty || _x2Controller.text.isEmpty ||
+        _x3Controller.text.isEmpty || _x4Controller.text.isEmpty ||
+        _x5Controller.text.isEmpty || _x6Controller.text.isEmpty ||
+        _x7Controller.text.isEmpty || _x8Controller.text.isEmpty) {
       setState(() {
         _result = 'Error: All fields are required.';
       });
       return;
     }
+
+    // If there are parsing errors, display them and stop
+    if (errors.isNotEmpty) {
+      setState(() {
+        _result = 'Error: Invalid inputs for ${errors.join(', ')}. Please enter valid numbers.';
+      });
+      return;
+    }
+
+    // Create inputs map with parsed numerical values
+    final inputs = {
+      'X1': x1,
+      'X2': x2,
+      'X3': x3,
+      'X4': x4,
+      'X5': x5,
+      'X6': x6,
+      'X7': x7,
+      'X8': x8,
+    };
 
     // Send POST request to the API
     try {
@@ -78,6 +110,7 @@ class _PredictionPageState extends State<PredictionPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Prediction'),
+        backgroundColor: Colors.green[700], // Darker green for AppBar
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -95,15 +128,34 @@ class _PredictionPageState extends State<PredictionPage> {
             _buildTextField(_x8Controller, 'Glazing Area Distribution (X8)', '0 to 5'),
             const SizedBox(height: 20),
             // Predict button
-            ElevatedButton(
-              onPressed: _makePrediction,
-              child: const Text('Predict'),
+            Center(
+              child: ElevatedButton(
+                onPressed: _makePrediction,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightGreen[300],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0), // Rounded corners
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0), // Larger padding
+                ),
+                child: const Text(
+                  'Predict',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             // Display area for result or error
-            Text(
-              _result,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Center(
+              child: Text(
+                _result,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: _result.startsWith('Error') ? Colors.red : Colors.green[800], // Conditional coloring
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),
@@ -114,13 +166,17 @@ class _PredictionPageState extends State<PredictionPage> {
   // Helper function to create consistent TextFields
   Widget _buildTextField(TextEditingController controller, String label, String hint) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: 12.0),
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
-          border: const OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          filled: true,
+          fillColor: Colors.grey[200],
         ),
         keyboardType: TextInputType.number,
       ),

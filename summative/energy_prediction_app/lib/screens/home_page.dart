@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Energy Efficiency Prediction'),
+        backgroundColor: Colors.green[700], // Dark green to match PredictionPage
       ),
       body: Center(
         child: Column(
@@ -16,10 +17,13 @@ class HomePage extends StatelessWidget {
           children: [
             const Text(
               'Welcome to the Energy Prediction App',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 24, // Larger font for prominence
+                fontWeight: FontWeight.bold, // Bold for emphasis
+              ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40), // Increased spacing for balance
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -27,7 +31,33 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const PredictionPage()),
                 );
               },
-              child: const Text('Go to Prediction'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightGreen[300], // Light green like PredictionPage
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0), // Rounded corners
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32.0,
+                  vertical: 16.0,
+                ), // Larger padding for a prominent button
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Go to Prediction',
+                    style: TextStyle(
+                      fontSize: 18, // Consistent with PredictionPage button
+                      color: Colors.white, // White text for contrast
+                    ),
+                  ),
+                  SizedBox(width: 8), // Space between text and icon
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white, // White icon to match text
+                  ),
+                ],
+              ),
             ),
           ],
         ),
