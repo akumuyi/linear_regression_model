@@ -16,9 +16,9 @@ A complete solution for predicting building heating loads based on architectural
 - [Data Exploration](#data-exploration)
 - [Model Training](#model-training)
 - [API Service](#api-service)
-- [Mobile Application](#mobile-application)
 - [Video Presentation](#video-presentation)
 - [Development Setup](#development-setup)
+- [Mobile Application](#mobile-application)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -157,20 +157,6 @@ python prediction.py
 ### Documentation
 Swagger UI available at: `https://energy-prediction-00ed.onrender.com/docs`
 
-## Mobile Application
-
-### Features
-- User-friendly interface
-- Input validation
-- Real-time prediction display
-- Error handling
-
-### Setup
-```bash
-cd summative/energy_prediction_app
-flutter pub get
-flutter run
-```
 
 
 ## Development Setup
@@ -199,6 +185,23 @@ flutter pub get
 - Start the API server
 - Launch the Flutter app
 - Test the complete system
+
+
+## Mobile Application
+
+### Features
+- User-friendly interface
+- Input validation
+- Real-time prediction display
+- Error handling
+
+### Setup
+```bash
+cd summative/energy_prediction_app
+flutter pub get
+flutter run
+```
+
 
 ## Contributing
 
