@@ -154,7 +154,7 @@ python prediction.py
 ```
 
 ### Documentation
-Swagger UI available at: `https://energy-prediction-00ed.onrender.com/docs`
+Swagger UI available at: [Swagger URL](https://energy-prediction-00ed.onrender.com/docs)
 
 
 
